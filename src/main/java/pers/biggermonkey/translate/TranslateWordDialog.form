@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="pers.biggermonkey.translate.TranslateWordDialog">
+  <grid id="27dc6" binding="jpanel" layout-manager="GridLayoutManager" row-count="6" column-count="8" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
+    <constraints>
+      <xy x="20" y="20" width="2544" height="539"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="7fa33" class="javax.swing.JComboBox" binding="inputLanguage">
+        <constraints>
+          <grid row="0" column="0" row-span="2" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <model/>
+        </properties>
+      </component>
+      <component id="b2aed" class="javax.swing.JComboBox" binding="outputLanguage">
+        <constraints>
+          <grid row="0" column="2" row-span="2" col-span="4" vsize-policy="0" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <model/>
+        </properties>
+      </component>
+      <component id="fa2de" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-12828605"/>
+          <text value="输入"/>
+        </properties>
+      </component>
+      <component id="c5039" class="javax.swing.JTextArea" binding="input">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="100" height="50"/>
+            <preferred-size width="500" height="100"/>
+            <maximum-size width="500" height="100"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="ed220" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="4" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="输出"/>
+        </properties>
+      </component>
+      <component id="cd4a1" class="javax.swing.JButton" binding="exchange">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="交换语言"/>
+        </properties>
+      </component>
+      <component id="c0701" class="javax.swing.JButton" binding="translate">
+        <constraints>
+          <grid row="5" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-14001789"/>
+          <text value="翻译"/>
+        </properties>
+      </component>
+      <component id="b714f" class="javax.swing.JTextPane" binding="output">
+        <constraints>
+          <grid row="3" column="2" row-span="1" col-span="4" vsize-policy="4" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="100" height="300"/>
+            <preferred-size width="500" height="300"/>
+            <maximum-size width="500" height="300"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-10525848"/>
+          <editable value="false"/>
+          <foreground color="-4473925"/>
+        </properties>
+      </component>
+      <component id="335c7" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="翻译渠道"/>
+        </properties>
+      </component>
+      <component id="a12f4" class="javax.swing.JCheckBox" binding="baiduSource">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="百度"/>
+        </properties>
+      </component>
+      <component id="b9747" class="javax.swing.JCheckBox" binding="baiduAISource">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="百度AI"/>
+        </properties>
+      </component>
+      <component id="4a8c8" class="javax.swing.JCheckBox" binding="youdaoSource">
+        <constraints>
+          <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="有道"/>
+        </properties>
+      </component>
+      <component id="5816c" class="javax.swing.JCheckBox" binding="googleSource">
+        <constraints>
+          <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="谷歌"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
