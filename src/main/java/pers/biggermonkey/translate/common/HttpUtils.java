@@ -3,13 +3,18 @@ package pers.biggermonkey.translate.common;
 import com.google.gson.Gson;
 import org.apache.commons.collections.MapUtils;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.HttpEntityWrapper;
+import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -22,10 +27,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author: huangwenjun16
@@ -146,11 +148,11 @@ public class HttpUtils {
                 }
             }
             response = client.execute(httpPost);
-            HttpEntity entity = response.getEntity();
-            if (entity == null) {
+            HttpEntity responseEntity = response.getEntity();
+            if (responseEntity == null) {
                 return null;
             }
-            return EntityUtils.toString(entity, "utf-8");
+            return EntityUtils.toString(responseEntity, "utf-8");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

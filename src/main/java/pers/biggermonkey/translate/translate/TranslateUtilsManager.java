@@ -9,6 +9,7 @@ import pers.biggermonkey.translate.translate.baidu.BaiduTranslateUtils;
 import pers.biggermonkey.translate.translate.baidu.ai.BaiduAiTranslateUtils;
 import pers.biggermonkey.translate.translate.google.GoogleTranslateUtils;
 import pers.biggermonkey.translate.translate.youdao.YoudaoTranslateUtils;
+import pers.biggermonkey.translate.translate.youdao.ai.YoudaoAiTranslateUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +37,7 @@ public class TranslateUtilsManager {
         translateUtilsMap.put(TranslateSourceEnum.BAIDU_AI, new BaiduAiTranslateUtils());
         translateUtilsMap.put(TranslateSourceEnum.YOUDAO, new YoudaoTranslateUtils());
         translateUtilsMap.put(TranslateSourceEnum.GOOGLE, new GoogleTranslateUtils());
+        translateUtilsMap.put(TranslateSourceEnum.YOUDAO_AI, new YoudaoAiTranslateUtils());
 
     }
 

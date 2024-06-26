@@ -29,6 +29,8 @@ import java.util.UUID;
  */
 public class YoudaoTranslateUtils implements TranslateUtils {
 
+    public static String APP_KEY = "appKey";
+    public static String APP_SECRET = "appSecret";
     private String appKey;
     private String appSecret;
 
@@ -37,8 +39,8 @@ public class YoudaoTranslateUtils implements TranslateUtils {
         if (translateConfigEnum == null) {
             return;
         }
-        this.appKey = PropertiesComponent.getInstance().getValue(Constants.getConfig(translateConfigEnum.getCode(), "appKey"));
-        this.appSecret = PropertiesComponent.getInstance().getValue(Constants.getConfig(translateConfigEnum.getCode(), "appSecret"));
+        this.appKey = PropertiesComponent.getInstance().getValue(Constants.getConfig(translateConfigEnum.getCode(), APP_KEY));
+        this.appSecret = PropertiesComponent.getInstance().getValue(Constants.getConfig(translateConfigEnum.getCode(), APP_SECRET));
     }
 
     @Override

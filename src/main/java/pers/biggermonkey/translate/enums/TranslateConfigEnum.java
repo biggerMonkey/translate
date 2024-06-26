@@ -1,7 +1,9 @@
 package pers.biggermonkey.translate.enums;
 
 import com.google.common.collect.Lists;
+import pers.biggermonkey.translate.translate.baidu.BaiduTranslateUtils;
 import pers.biggermonkey.translate.translate.baidu.ai.BaiduAiTranslateUtils;
+import pers.biggermonkey.translate.translate.youdao.YoudaoTranslateUtils;
 
 import java.util.List;
 
@@ -11,9 +13,10 @@ import java.util.List;
  * @description:
  */
 public enum TranslateConfigEnum {
-    BAIDU(TranslateSourceEnum.BAIDU, "baidu", Lists.newArrayList("appId", "secretKey")),
-    YOUDAO(TranslateSourceEnum.YOUDAO, "youdao", Lists.newArrayList("appKey", "appSecret")),
+    BAIDU(TranslateSourceEnum.BAIDU, "baidu", Lists.newArrayList(BaiduTranslateUtils.APP_ID, BaiduTranslateUtils.SECRET_KEY)),
+    YOUDAO(TranslateSourceEnum.YOUDAO, "youdao", Lists.newArrayList(YoudaoTranslateUtils.APP_KEY, YoudaoTranslateUtils.APP_SECRET)),
     BAIDU_AI(TranslateSourceEnum.BAIDU_AI, "baiduAi", Lists.newArrayList(BaiduAiTranslateUtils.CLIENT_ID, BaiduAiTranslateUtils.CLIENT_SECRET, BaiduAiTranslateUtils.TERM_IDS)),
+    YOUDAO_AI(TranslateSourceEnum.YOUDAO_AI, "youdao", Lists.newArrayList(YoudaoTranslateUtils.APP_KEY, YoudaoTranslateUtils.APP_SECRET)),
     ;
 
 

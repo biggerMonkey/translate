@@ -46,14 +46,14 @@ public class YoudaoAiTranslateUtils implements TranslateUtils {
     public TranslateResponse translate(TranslateRequest request) {
         try {
             validateReq(request);
-            String translateUrl = "https://openapi.youdao.com/api";
+            String translateUrl = "https://openapi.youdao.com/llm_trans";
             // 添加请求参数
             Map<String, String> params = new HashMap<>();
             // 添加鉴权相关参数
             String salt = UUID.randomUUID().toString();
             String currentTime = String.valueOf(System.currentTimeMillis() / 1000);
             String sign = AuthV3Util.calculateSign(appKey, appSecret, request.getContent(), salt, currentTime);
-            params.put("q", request.getContent());
+            params.put("i", request.getContent());
             params.put("from", YoudaoLanguageTypeEnum.getEnumByLanguageType(request.getFrom()).getCode());
             params.put("to", YoudaoLanguageTypeEnum.getEnumByLanguageType(request.getTo()).getCode());
             params.put("appKey", appKey);
@@ -61,12 +61,14 @@ public class YoudaoAiTranslateUtils implements TranslateUtils {
             params.put("sign", sign);
             params.put("curtime", currentTime);
             params.put("signType", "v3");
+            params.put("handleOption", "2");
+            params.put("polishOption", "10");
 //            params.put("vocabId", "");
             // 请求api服务
             Map<String, String> header = new HashMap<>();
 //            header.put("Content-Type", "application/json");
             String result = HttpUtils.postForm(translateUrl, header, params);
-            System.out.println("有道翻译：" + result);
+            System.out.println("有道AI翻译：" + result);
             YoudaoResponse youdaoResponse = new Gson().fromJson(result, YoudaoResponse.class);
             validateRes(youdaoResponse);
             return buildTranslateResponse(youdaoResponse);
@@ -102,7 +104,7 @@ public class YoudaoAiTranslateUtils implements TranslateUtils {
 
     @Override
     public TranslateSourceEnum getSupportType() {
-        return TranslateSourceEnum.YOUDAO;
+        return TranslateSourceEnum.YOUDAO_AI;
     }
 
 

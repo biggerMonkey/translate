@@ -34,6 +34,7 @@ public class TranslateWordDialog {
     private JCheckBox baiduAISource;
     private JCheckBox youdaoSource;
     private JCheckBox googleSource;
+    private JCheckBox youdaoAiSource;
 
     private TranslateUtilsManager translateUtilsManager;
 
@@ -99,6 +100,9 @@ public class TranslateWordDialog {
         }
         if (youdaoSource.isSelected()) {
             list.add(TranslateSourceEnum.YOUDAO);
+        }
+        if (youdaoAiSource.isSelected()) {
+            list.add(TranslateSourceEnum.YOUDAO_AI);
         }
         return list;
     }
@@ -197,5 +201,13 @@ public class TranslateWordDialog {
 
     public void setTranslateUtilsManager(TranslateUtilsManager translateUtilsManager) {
         this.translateUtilsManager = translateUtilsManager;
+    }
+
+    public JCheckBox getYoudaoAiSource() {
+        return youdaoAiSource;
+    }
+
+    public void setYoudaoAiSource(JCheckBox youdaoAiSource) {
+        this.youdaoAiSource = youdaoAiSource;
     }
 }

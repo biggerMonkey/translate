@@ -27,8 +27,8 @@ import java.util.Map;
  */
 public class BaiduTranslateUtils implements TranslateUtils {
 
-    /*private String appId = "20230908001809374";
-    private String secretKey = "BoP3qGBEb5Ef_gx5VI8c";*/
+    public static String APP_ID="appId";
+    public static String SECRET_KEY="secretKey";
     private String appId;
     private String secretKey;
 
@@ -100,8 +100,8 @@ public class BaiduTranslateUtils implements TranslateUtils {
         if (translateConfigEnum == null) {
             return;
         }
-        appId = PropertiesComponent.getInstance().getValue(Constants.getConfig(translateConfigEnum.getCode(), "appId"));
-        secretKey = PropertiesComponent.getInstance().getValue(Constants.getConfig(translateConfigEnum.getCode(), "secretKey"));
+        appId = PropertiesComponent.getInstance().getValue(Constants.getConfig(translateConfigEnum.getCode(), APP_ID));
+        secretKey = PropertiesComponent.getInstance().getValue(Constants.getConfig(translateConfigEnum.getCode(), SECRET_KEY));
     }
 
     public void validateReq(TranslateRequest request) {

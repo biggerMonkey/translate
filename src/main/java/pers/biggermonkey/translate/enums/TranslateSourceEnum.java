@@ -8,6 +8,8 @@ package pers.biggermonkey.translate.enums;
 public enum TranslateSourceEnum {
     GOOGLE(1,"谷歌翻译"),
     YOUDAO(2,"有道翻译"),
+
+    YOUDAO_AI(4,"有道AI翻译"),
     BAIDU(3,"百度翻译"),
     BAIDU_AI(4,"百度AI翻译"),
     ;
