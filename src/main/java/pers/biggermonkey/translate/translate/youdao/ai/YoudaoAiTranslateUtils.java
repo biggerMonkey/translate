@@ -1,4 +1,4 @@
-package pers.biggermonkey.translate.translate.youdao;
+package pers.biggermonkey.translate.translate.youdao.ai;
 
 
 import com.google.gson.Gson;
@@ -16,6 +16,7 @@ import pers.biggermonkey.translate.translate.TranslateRequest;
 import pers.biggermonkey.translate.translate.TranslateResponse;
 import pers.biggermonkey.translate.translate.TranslateUtils;
 import pers.biggermonkey.translate.translate.baidu.YoudaoResCodeEnum;
+import pers.biggermonkey.translate.translate.youdao.YoudaoResponse;
 import pers.biggermonkey.translate.translate.youdao.utils.AuthV3Util;
 
 import java.util.HashMap;
@@ -27,18 +28,20 @@ import java.util.UUID;
  * @date: 2023/9/8 10:05
  * @description:
  */
-public class YoudaoTranslateUtils implements TranslateUtils {
+public class YoudaoAiTranslateUtils implements TranslateUtils {
 
     private String appKey;
     private String appSecret;
 
-    public YoudaoTranslateUtils() {
+    public YoudaoAiTranslateUtils() {
         TranslateConfigEnum translateConfigEnum = TranslateConfigEnum.getEnumBySource(getSupportType());
         if (translateConfigEnum == null) {
             return;
         }
         this.appKey = PropertiesComponent.getInstance().getValue(Constants.getConfig(translateConfigEnum.getCode(), "appKey"));
         this.appSecret = PropertiesComponent.getInstance().getValue(Constants.getConfig(translateConfigEnum.getCode(), "appSecret"));
+        this.appKey = "42f07ead7294ed25";
+        this.appSecret = "22VbfXF5bT61lK0H4DWQNUWrMBkg1gC5";
     }
 
     @Override
@@ -123,7 +126,7 @@ public class YoudaoTranslateUtils implements TranslateUtils {
     }
 
     public static void main(String[] args) {
-        YoudaoTranslateUtils youdaoTranslateUtils = new YoudaoTranslateUtils();
+        YoudaoAiTranslateUtils youdaoTranslateUtils = new YoudaoAiTranslateUtils();
         TranslateRequest request = new TranslateRequest();
         request.setFrom(LanguageTypeEnum.ZH);
         request.setTo(LanguageTypeEnum.EN);
