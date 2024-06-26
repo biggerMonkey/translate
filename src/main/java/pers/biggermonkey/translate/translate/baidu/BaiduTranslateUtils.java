@@ -50,12 +50,13 @@ public class BaiduTranslateUtils implements TranslateUtils {
             Map<String, String> header = new HashMap<>();
             header.put("Content-Type", ContentType.APPLICATION_FORM_URLENCODED.getMimeType());
 
-            HttpUtils httpUtils = new HttpUtils();
-            String response = httpUtils.get(translateUrl, header, param);
+            String response = HttpUtils.get(translateUrl, header, param);
             System.out.println("百度翻译响应：" + response);
             BaiduResponse baiduResponse = new Gson().fromJson(response, BaiduResponse.class);
             validateRes(baiduResponse);
             return buildTranslateResponse(baiduResponse);
+        } catch (BizException be) {
+            throw be;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -68,7 +69,7 @@ public class BaiduTranslateUtils implements TranslateUtils {
         }
         TranslateResponse translateResponse = new TranslateResponse();
         translateResponse.setFrom(baiduResponse.getFrom());
-        translateResponse.setFrom(baiduResponse.getTo());
+        translateResponse.setTo(baiduResponse.getTo());
         if (CollectionUtils.isEmpty(baiduResponse.getTrans_result())) {
             return translateResponse;
         }

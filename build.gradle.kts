@@ -9,6 +9,11 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
 }
+//定义依赖,这里采用了g:a:v简写方式,加号代表了最新版本(可选)
+dependencies {
+//    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+}
+
 
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html

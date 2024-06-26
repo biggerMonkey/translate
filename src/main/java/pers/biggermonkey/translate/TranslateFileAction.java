@@ -16,7 +16,7 @@ public class TranslateFileAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        JFrame frame = new JFrame("在线翻译");
+        JFrame frame = new JFrame("注释翻译");
         frame.setContentPane((new TranslateFileDialog()).getJpanel());
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();

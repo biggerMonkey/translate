@@ -3,6 +3,9 @@ package pers.biggermonkey.translate.common;
 import com.google.gson.Gson;
 import org.apache.commons.collections.MapUtils;
 import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -10,12 +13,16 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,10 +33,33 @@ import java.util.Map;
  * @description:
  */
 public class HttpUtils {
+    private static PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
+    private static RequestConfig requestConfig;
+    private static CloseableHttpClient client = HttpClientBuilder.create()
+            .setConnectionManager(cm)
+            .setDefaultRequestConfig(requestConfig)
+            .build();
 
-    public String get(String url, Map<String, String> header, Map<String, Object> param) {
+    static {
+        //连接池最大生成连接数200
+        cm.setMaxTotal(200);
+        // 默认设置route最大连接数为20
+        cm.setDefaultMaxPerRoute(20);
+        requestConfig = RequestConfig.custom()
+                .setConnectionRequestTimeout(5)
+                .setSocketTimeout(5)
+                .setConnectTimeout(5)
+                .build();
+    }
+
+    public static CloseableHttpClient getInstance() {
+        return client;
+    }
+
+    public static String get(String url, Map<String, String> header, Map<String, Object> param) {
+
         //获得http客户端
-        CloseableHttpClient client = HttpClientBuilder.create().build();
+        CloseableHttpClient client = getInstance();
 
         //参数
         StringBuilder params = new StringBuilder();
@@ -61,9 +91,9 @@ public class HttpUtils {
         } finally {
             try {
                 //释放资源
-                if (client != null) {
-                    client.close();
-                }
+//                if (client != null) {
+//                    client.close();
+//                }
                 if (response != null) {
                     response.close();
                 }
@@ -94,9 +124,54 @@ public class HttpUtils {
         return postBody(url, header, null);
     }
 
-    public String postBody(String url, Map<String, String> header, Map<String, Object> body) {
+    public static String postForm(String url, Map<String, String> header, Map<String, String> body) {
         //获取Http客户端
-        CloseableHttpClient client = HttpClientBuilder.create().build();
+        CloseableHttpClient client = getInstance();
+        //创建Post请求
+        HttpPost httpPost = new HttpPost(url);
+        if (body == null) {
+            body = new HashMap<>();
+        }
+        List<NameValuePair> parameters = new ArrayList<>();
+        for (Map.Entry<String, String> paramEntry : body.entrySet()) {
+            parameters.add(new BasicNameValuePair(paramEntry.getKey(), paramEntry.getValue()));
+        }
+        CloseableHttpResponse response = null;
+        try {
+            HttpEntity httpEntity = new UrlEncodedFormEntity(parameters, "utf-8");
+            httpPost.setEntity(httpEntity);
+            if (MapUtils.isNotEmpty(header)) {
+                for (Map.Entry<String, String> headerEntry : header.entrySet()) {
+                    httpPost.setHeader(headerEntry.getKey(), headerEntry.getValue());
+                }
+            }
+            response = client.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+            if (entity == null) {
+                return null;
+            }
+            return EntityUtils.toString(entity, "utf-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+//                if (client != null) {
+//                    client.close();
+//                }
+                if (response != null) {
+                    response.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+
+    }
+
+    public static String postBody(String url, Map<String, String> header, Map<String, Object> body) {
+        //获取Http客户端
+        CloseableHttpClient client = getInstance();
         //创建Post请求
         HttpPost httpPost = new HttpPost(url);
         if (body == null) {
@@ -121,9 +196,9 @@ public class HttpUtils {
             e.printStackTrace();
         } finally {
             try {
-                if (client != null) {
-                    client.close();
-                }
+//                if (client != null) {
+//                    client.close();
+//                }
                 if (response != null) {
                     response.close();
                 }

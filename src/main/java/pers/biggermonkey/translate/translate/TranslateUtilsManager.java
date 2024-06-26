@@ -21,6 +21,12 @@ import java.util.Map;
  */
 public class TranslateUtilsManager {
 
+    private static TranslateUtilsManager translateUtilsManager = new TranslateUtilsManager();
+
+    public static TranslateUtilsManager getInstance(){
+        return translateUtilsManager;
+    }
+
     private Map<TranslateSourceEnum, TranslateUtils> translateUtilsMap;
 
     public TranslateUtilsManager() {
@@ -53,6 +59,7 @@ public class TranslateUtilsManager {
                     }
                     response.put(translateUtils.getSupportType(), convert(request, be.getMessage()));
                 } catch (Exception e) {
+                    e.printStackTrace();
                     if (TranslateTypeEnum.FILE.equals(request.getTranslateTypeEnum())) {
                         throw new BizException("翻译异常！");
                     }

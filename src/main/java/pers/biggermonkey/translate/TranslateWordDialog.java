@@ -4,6 +4,7 @@ import org.apache.commons.collections.MapUtils;
 import pers.biggermonkey.translate.common.Constants;
 import pers.biggermonkey.translate.enums.LanguageTypeEnum;
 import pers.biggermonkey.translate.enums.TranslateSourceEnum;
+import pers.biggermonkey.translate.enums.TranslateTypeEnum;
 import pers.biggermonkey.translate.translate.TranslateRequest;
 import pers.biggermonkey.translate.translate.TranslateResponse;
 import pers.biggermonkey.translate.translate.TranslateUtilsManager;
@@ -37,7 +38,7 @@ public class TranslateWordDialog {
     private TranslateUtilsManager translateUtilsManager;
 
     public TranslateWordDialog() {
-        translateUtilsManager = new TranslateUtilsManager();
+        translateUtilsManager = TranslateUtilsManager.getInstance();
         for (LanguageTypeEnum typeEnum : LanguageTypeEnum.values()) {
             inputLanguage.addItem(typeEnum);
             outputLanguage.addItem(typeEnum);
@@ -48,19 +49,18 @@ public class TranslateWordDialog {
         translate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                translate.setEnabled(false);
                 String inputStr = input.getText();
-                if (inputStr.length() > 1000) {
-                    output.setText("输入字符超过1000，请缩短重试");
-                    return;
-                }
                 TranslateRequest request = new TranslateRequest();
                 request.setFrom((LanguageTypeEnum) inputLanguage.getSelectedItem());
                 request.setTo((LanguageTypeEnum) outputLanguage.getSelectedItem());
                 request.setContent(inputStr);
                 request.setTranslateSourceEnumList(getTranslateSourceList());
+                request.setTranslateTypeEnum(TranslateTypeEnum.WORD);
                 Map<TranslateSourceEnum, TranslateResponse> responseMap = translateUtilsManager.translate(request);
                 if (MapUtils.isEmpty(responseMap)) {
                     output.setText("翻译失败,请重试");
+                    translate.setEnabled(true);
                     return;
                 }
                 StringBuilder responseStr = new StringBuilder();
@@ -69,6 +69,7 @@ public class TranslateWordDialog {
                     responseStr.append(responseEntry.getValue().getTarget()).append(Constants.DEFAULT_SEPARATOR);
                 }
                 output.setText(responseStr.toString());
+                translate.setEnabled(true);
             }
         });
         this.input.setRows(6);

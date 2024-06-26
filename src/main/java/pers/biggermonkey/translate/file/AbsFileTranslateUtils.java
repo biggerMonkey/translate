@@ -31,7 +31,7 @@ public class AbsFileTranslateUtils {
         if (StringLanguageUtils.validateStr(inputStr, toLang)) {
             return "";
         }
-        TranslateUtilsManager translateUtilsManager = new TranslateUtilsManager();
+        TranslateUtilsManager translateUtilsManager = TranslateUtilsManager.getInstance();
         TranslateRequest request = new TranslateRequest();
         request.setFrom(fromLang);
         request.setTo(toLang);

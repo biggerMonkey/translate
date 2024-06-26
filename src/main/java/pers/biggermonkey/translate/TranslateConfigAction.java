@@ -10,7 +10,7 @@ public class TranslateConfigAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        JFrame frame = new JFrame("配置保存");
+        JFrame frame = new JFrame("配置管理");
         frame.setContentPane((new TranslateConfigDialog()).getJpanel());
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
