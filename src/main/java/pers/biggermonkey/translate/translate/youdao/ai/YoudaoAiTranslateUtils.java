@@ -40,8 +40,6 @@ public class YoudaoAiTranslateUtils implements TranslateUtils {
         }
         this.appKey = PropertiesComponent.getInstance().getValue(Constants.getConfig(translateConfigEnum.getCode(), "appKey"));
         this.appSecret = PropertiesComponent.getInstance().getValue(Constants.getConfig(translateConfigEnum.getCode(), "appSecret"));
-        this.appKey = "42f07ead7294ed25";
-        this.appSecret = "22VbfXF5bT61lK0H4DWQNUWrMBkg1gC5";
     }
 
     @Override
