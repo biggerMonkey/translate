@@ -1,6 +1,6 @@
 package pers.biggermonkey.translate.file;
 
-import java.io.File;
+import pers.biggermonkey.translate.enums.FileTypeEnum;
 
 /**
  * @author: huangwenjun16
@@ -11,5 +11,5 @@ public interface FileTranslateUtils {
 
     void translateFile(TranslateFileDto translateFileDto);
 
-    boolean supportType(String fileName);
+    FileTypeEnum supportType();
 }

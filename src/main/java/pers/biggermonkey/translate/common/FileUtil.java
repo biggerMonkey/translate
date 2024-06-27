@@ -1,5 +1,8 @@
 package pers.biggermonkey.translate.common;
 
+import org.apache.commons.lang3.StringUtils;
+import pers.biggermonkey.translate.enums.FileTypeEnum;
+
 import java.io.*;
 
 /**
@@ -68,5 +71,16 @@ public class FileUtil {
                 bos.close();
             }
         }
+    }
+
+    public static FileTypeEnum getFileType(String fileName) {
+        if (StringUtils.isBlank(fileName)) {
+            return null;
+        }
+        String[] fileNameArr = fileName.split("\\.");
+        if (fileNameArr.length < 2) {
+            return null;
+        }
+        return FileTypeEnum.getEnumBySuffix(fileNameArr[fileNameArr.length - 1]);
     }
 }

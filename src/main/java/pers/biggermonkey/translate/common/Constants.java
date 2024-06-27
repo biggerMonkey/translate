@@ -23,6 +23,11 @@ public class Constants {
 
     public static String KEY_PREFIX = "translate";
 
+    public static String XML_START_NORMAL_COMMENT = "<!--";
+    public static String XML_START_DOC_COMMENT = "<![CDATA[";
+    public static String XML_END_NORMAL_COMMENT = "-->";
+    public static String XML_END_DOC_COMMENT = "]]>";
+
     public static String getConfig(String sourceCode, String field) {
         return KEY_PREFIX + "." + sourceCode + "." + field;
     }

@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import pers.biggermonkey.translate.common.BizException;
 import pers.biggermonkey.translate.common.Constants;
 import pers.biggermonkey.translate.common.StringLanguageUtils;
-import pers.biggermonkey.translate.enums.FileTypeEnum;
 import pers.biggermonkey.translate.enums.LanguageTypeEnum;
 import pers.biggermonkey.translate.enums.TranslateSourceEnum;
 import pers.biggermonkey.translate.enums.TranslateTypeEnum;
@@ -14,6 +13,7 @@ import pers.biggermonkey.translate.translate.TranslateRequest;
 import pers.biggermonkey.translate.translate.TranslateResponse;
 import pers.biggermonkey.translate.translate.TranslateUtilsManager;
 
+import java.io.*;
 import java.util.Map;
 
 /**
@@ -21,11 +21,83 @@ import java.util.Map;
  * @date: 2024/6/20 09:11
  * @description:
  */
-public class AbsFileTranslateUtils {
+public abstract class AbsFileTranslateUtils implements FileTranslateUtils {
     protected LanguageTypeEnum fromLang;
     protected LanguageTypeEnum toLang;
-
     protected TranslateSourceEnum translateSourceEnum;
+
+    @Override
+    public void translateFile(TranslateFileDto translateFileDto) {
+        //写入新的临时文件
+        FileOutputStream tempFos = null;
+        OutputStreamWriter tempOsw = null;
+        BufferedWriter tempBw = null;
+        File tempFile = null;
+        //读取旧文件内容
+        FileInputStream oldFis = null;
+        InputStreamReader oldIsr = null;
+        BufferedReader oldBr = null;
+        try {
+            initParam(translateFileDto);
+            File oldFile = translateFileDto.getOldFile();
+            String oldFilePath = oldFile.getAbsolutePath();
+            String tempFilePath = oldFilePath + "temp";
+            tempFile = new File(tempFilePath);
+            //写入新的临时文件
+            tempFos = new FileOutputStream(tempFile);
+            tempOsw = new OutputStreamWriter(tempFos, Constants.UTF_8);
+            tempBw = new BufferedWriter(tempOsw);
+
+            //读取旧文件内容
+            oldFis = new FileInputStream(oldFile);
+            oldIsr = new InputStreamReader(oldFis, Constants.UTF_8);
+            oldBr = new BufferedReader(oldIsr);
+            translateFile(translateFileDto, tempBw, oldBr);
+            //注意关闭的先后顺序，先打开的后关闭，后打开的先关闭
+            oldBr.close();
+            oldIsr.close();
+            oldFis.close();
+            tempBw.close();
+            tempOsw.close();
+            tempFos.close();
+            //重写文件
+            oldFile.delete();
+            tempFile.renameTo(new File(oldFilePath));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //注意关闭的先后顺序，先打开的后关闭，后打开的先关闭
+            try {
+                if (oldBr != null) {
+                    oldBr.close();
+                }
+                if (oldIsr != null) {
+                    oldIsr.close();
+                }
+                if (oldIsr != null) {
+                    oldFis.close();
+                }
+
+                if (oldIsr != null) {
+                    tempBw.close();
+                }
+                if (oldIsr != null) {
+                    tempOsw.close();
+                }
+                if (oldIsr != null) {
+                    tempFos.close();
+                }
+                if (tempFile != null) {
+                    tempFile.delete();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public abstract void translateFile(TranslateFileDto translateFileDto, BufferedWriter tempBw, BufferedReader oldBr) throws Exception;
 
     public String translateWord(String inputStr) {
         if (StringLanguageUtils.validateStr(inputStr, toLang)) {
@@ -64,17 +136,6 @@ public class AbsFileTranslateUtils {
             return true;
         }
         return temp.replace("\t", "").length() == 0;
-    }
-
-    public FileTypeEnum getFileType(String fileName) {
-        if (StringUtils.isBlank(fileName)) {
-            return null;
-        }
-        String[] fileNameArr = fileName.split("\\.");
-        if (fileNameArr.length < 2) {
-            return null;
-        }
-        return FileTypeEnum.getEnumBySuffix(fileNameArr[fileNameArr.length - 1]);
     }
 
     public void initParam(TranslateFileDto translateFileDto) {

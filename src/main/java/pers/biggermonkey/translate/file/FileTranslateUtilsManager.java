@@ -1,11 +1,13 @@
 package pers.biggermonkey.translate.file;
 
+import pers.biggermonkey.translate.common.FileUtil;
 import pers.biggermonkey.translate.enums.LanguageTypeEnum;
+import pers.biggermonkey.translate.enums.FileTypeEnum;
 import pers.biggermonkey.translate.file.java.JavaFileTranslateUtils;
 import pers.biggermonkey.translate.file.xml.XmlFileTranslateUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: huangwenjun16
@@ -13,25 +15,28 @@ import java.util.List;
  * @description:
  */
 public class FileTranslateUtilsManager {
-    private List<FileTranslateUtils> fileTranslateUtils;
+    private Map<FileTypeEnum, FileTranslateUtils> fileTranslateUtils;
 
     public FileTranslateUtilsManager() {
         //初始化
-        this.fileTranslateUtils = new ArrayList<>();
-        this.fileTranslateUtils.add(new JavaFileTranslateUtils());
-        this.fileTranslateUtils.add(new XmlFileTranslateUtils());
+        this.fileTranslateUtils = new HashMap<>();
+//        this.fileTranslateUtils.put(FileTypeEnum.JAVA, new JavaFileTranslateUtils());
+//        this.fileTranslateUtils.put(FileTypeEnum.XML, new XmlFileTranslateUtils());
     }
 
     public void translateFile(TranslateFileDto translateFileDto) {
         if (!validateParam(translateFileDto)) {
             return;
         }
-        for (FileTranslateUtils fileTranslateUtil : fileTranslateUtils) {
-            if (fileTranslateUtil.supportType(translateFileDto.getOldFile().getName())) {
-                fileTranslateUtil.translateFile(translateFileDto);
-                return;
-            }
+        FileTypeEnum fileTypeEnum = FileUtil.getFileType(translateFileDto.getOldFile().getName());
+        if (fileTypeEnum == null) {
+            return;
         }
+        FileTranslateUtils fileTranslateUtil = fileTranslateUtils.get(fileTypeEnum);
+        if (fileTranslateUtil == null) {
+            fileTranslateUtil = new DefaultFileTranslateUtils();
+        }
+        fileTranslateUtil.translateFile(translateFileDto);
     }
 
     public boolean validateParam(TranslateFileDto translateFileDto) {

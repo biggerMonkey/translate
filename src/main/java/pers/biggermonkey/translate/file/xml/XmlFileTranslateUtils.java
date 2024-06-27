@@ -1,12 +1,12 @@
 package pers.biggermonkey.translate.file.xml;
 
-import pers.biggermonkey.translate.common.Constants;
 import pers.biggermonkey.translate.enums.FileTypeEnum;
 import pers.biggermonkey.translate.file.AbsFileTranslateUtils;
 import pers.biggermonkey.translate.file.FileTranslateUtils;
 import pers.biggermonkey.translate.file.TranslateFileDto;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 
 /**
  * @author: huangwenjun16
@@ -14,13 +14,14 @@ import java.io.*;
  * @description:
  */
 public class XmlFileTranslateUtils extends AbsFileTranslateUtils implements FileTranslateUtils {
+
     @Override
-    public void translateFile(TranslateFileDto translateFileDto) {
+    public void translateFile(TranslateFileDto translateFileDto, BufferedWriter tempBw, BufferedReader oldBr) throws Exception {
 
     }
 
     @Override
-    public boolean supportType(String fileName) {
-        return FileTypeEnum.XML.equals(getFileType(fileName));
+    public FileTypeEnum supportType() {
+        return FileTypeEnum.XML;
     }
 }

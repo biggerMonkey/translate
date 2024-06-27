@@ -29,13 +29,14 @@ public class TranslateFile {
             , JTextArea showProcessing, JLabel progressBar) {
         getFileList(new File(rootDir));
         int totalFile = fileList.size();
+        long startTime = System.currentTimeMillis();
         for (int i = 0; i < totalFile; i++) {
             File file = fileList.get(i);
             showProcessing.append(file.getPath() + Constants.LINE_BREAKS);
             // 滚动到最后一行
             showProcessing.setCaretPosition(showProcessing.getDocument().getLength());
             //更新文件进度
-            progressBar.setText((i + 1) + "/" + totalFile);
+            progressBar.setText((i + 1) + "/" + totalFile + " 耗时：" + (System.currentTimeMillis() - startTime) / 1000 + "s");
             translateFileDto.setOldFile(file);
             fileTranslateUtilsManager.translateFile(translateFileDto);
         }
