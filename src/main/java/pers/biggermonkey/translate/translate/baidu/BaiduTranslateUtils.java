@@ -1,5 +1,6 @@
 package pers.biggermonkey.translate.translate.baidu;
 
+import com.fasterxml.jackson.jr.ob.JSON;
 import com.google.gson.Gson;
 import com.intellij.ide.util.PropertiesComponent;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -49,7 +50,7 @@ public class BaiduTranslateUtils implements TranslateUtils {
 
             Map<String, String> header = new HashMap<>();
             header.put("Content-Type", ContentType.APPLICATION_FORM_URLENCODED.getMimeType());
-
+            System.out.println("百度翻译请求：" + request.getContent());
             String response = HttpUtils.get(translateUrl, header, param);
             System.out.println("百度翻译响应：" + response);
             BaiduResponse baiduResponse = new Gson().fromJson(response, BaiduResponse.class);

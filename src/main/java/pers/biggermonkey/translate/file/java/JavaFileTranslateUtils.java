@@ -3,13 +3,14 @@ package pers.biggermonkey.translate.file.java;
 import org.apache.commons.lang3.StringUtils;
 import pers.biggermonkey.translate.common.Constants;
 import pers.biggermonkey.translate.common.StringLanguageUtils;
-import pers.biggermonkey.translate.enums.ResultDealTypeEnum;
 import pers.biggermonkey.translate.enums.FileTypeEnum;
+import pers.biggermonkey.translate.enums.ResultDealTypeEnum;
 import pers.biggermonkey.translate.file.AbsFileTranslateUtils;
 import pers.biggermonkey.translate.file.FileTranslateUtils;
 import pers.biggermonkey.translate.file.TranslateFileDto;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 
 /**
  * @author: huangwenjun16
@@ -27,6 +28,10 @@ public class JavaFileTranslateUtils extends AbsFileTranslateUtils implements Fil
             if (line.contains(Constants.JAVA_START_SIGNE_COMMENT)) {
                 //单行注释
                 String[] lineArr = line.split(Constants.JAVA_START_SIGNE_COMMENT);
+                if (lineArr.length < 2) {
+                    tempBw.write(line + Constants.LINE_BREAKS);
+                    continue;
+                }
                 if (!isEmptyAndNoChar(lineArr[0])) {
                     //注释在有效内容之后
                     if (ResultDealTypeEnum.BOTH.equals(translateFileDto.getResultDealTypeEnum())) {
@@ -71,7 +76,17 @@ public class JavaFileTranslateUtils extends AbsFileTranslateUtils implements Fil
                 annSbTwo.append(Constants.LINE_BREAKS);
                 continue;
             }
-            tempBw.write(line + Constants.LINE_BREAKS);
+            //字符串中不包含当前语言则保留原串
+            //eg:china 中文->英文  china 中只包含英文，则直接保留原串 china
+            if (!StringLanguageUtils.validateStr(line, fromLang)) {
+                tempBw.write(line + Constants.LINE_BREAKS);
+                continue;
+            }
+            if (StringUtils.isBlank(line)) {
+                tempBw.write(line + Constants.LINE_BREAKS);
+                continue;
+            }
+            tempBw.write(translateWord(line) + Constants.LINE_BREAKS);
         }
     }
 
@@ -89,7 +104,7 @@ public class JavaFileTranslateUtils extends AbsFileTranslateUtils implements Fil
             }
             //字符串中不包含当前语言则保留原串
             //eg:china 中文->英文  china 中只包含英文，则直接保留原串 china
-            if (StringLanguageUtils.validateStr(str, toLang)) {
+            if (!StringLanguageUtils.validateStr(str, fromLang)) {
                 tempBw.write(str + Constants.LINE_BREAKS);
                 continue;
             }

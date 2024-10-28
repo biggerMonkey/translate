@@ -57,7 +57,7 @@ public class TranslateFileDialog {
         for (ResultDealTypeEnum resultDealEnum : ResultDealTypeEnum.values()) {
             resultDealType.addItem(resultDealEnum);
         }
-        resultDealType.setSelectedItem(ResultDealTypeEnum.BOTH);
+        resultDealType.setSelectedItem(ResultDealTypeEnum.ONLY_TARGET);
 
         this.modules.addActionListener(e -> {
             ModuleInfoModel selectedItem = (ModuleInfoModel) modules.getSelectedItem();

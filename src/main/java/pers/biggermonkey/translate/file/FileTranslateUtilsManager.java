@@ -20,8 +20,8 @@ public class FileTranslateUtilsManager {
     public FileTranslateUtilsManager() {
         //初始化
         this.fileTranslateUtils = new HashMap<>();
-//        this.fileTranslateUtils.put(FileTypeEnum.JAVA, new JavaFileTranslateUtils());
-//        this.fileTranslateUtils.put(FileTypeEnum.XML, new XmlFileTranslateUtils());
+        this.fileTranslateUtils.put(FileTypeEnum.JAVA, new JavaFileTranslateUtils());
+        this.fileTranslateUtils.put(FileTypeEnum.XML, new XmlFileTranslateUtils());
     }
 
     public void translateFile(TranslateFileDto translateFileDto) {
@@ -30,6 +30,9 @@ public class FileTranslateUtilsManager {
         }
         FileTypeEnum fileTypeEnum = FileUtil.getFileType(translateFileDto.getOldFile().getName());
         if (fileTypeEnum == null) {
+            return;
+        }
+        if(FileTypeEnum.XML.equals(fileTypeEnum)){
             return;
         }
         FileTranslateUtils fileTranslateUtil = fileTranslateUtils.get(fileTypeEnum);

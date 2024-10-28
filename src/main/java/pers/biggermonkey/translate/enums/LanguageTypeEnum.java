@@ -6,7 +6,7 @@ package pers.biggermonkey.translate.enums;
  * @description:
  */
 public enum LanguageTypeEnum {
-    ZH("zh", "中文","^[\u4E00-\u9FA5]+$"),
+    ZH("zh", "中文","[\u4e00-\u9fa5]"),
     EN("en", "英语","^[\u0020-\u007E]+$"),
     ARA("ara", "阿拉伯语"),
     ALB("alb", "阿尔巴尼亚语"),

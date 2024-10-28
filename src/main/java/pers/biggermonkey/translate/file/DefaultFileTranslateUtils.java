@@ -129,7 +129,7 @@ public class DefaultFileTranslateUtils extends AbsFileTranslateUtils implements 
             }
             //字符串中不包含当前语言则保留原串
             //eg:china 中文->英文  china 中只包含英文，则直接保留原串 china
-            if (StringLanguageUtils.validateStr(str, toLang)) {
+            if (!StringLanguageUtils.validateStr(str, fromLang)) {
                 tempBw.write(str + Constants.LINE_BREAKS);
                 continue;
             }

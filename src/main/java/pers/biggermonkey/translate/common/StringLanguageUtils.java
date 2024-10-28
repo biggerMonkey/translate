@@ -3,6 +3,7 @@ package pers.biggermonkey.translate.common;
 
 import pers.biggermonkey.translate.enums.LanguageTypeEnum;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -24,26 +25,26 @@ public class StringLanguageUtils {
         if (languageTypeEnum.getMatchPattern() == null) {
             return false;
         }
-
-        return Pattern.matches(languageTypeEnum.getMatchPattern(),cleanStr(str));
+        Pattern p = Pattern.compile(languageTypeEnum.getMatchPattern());
+        return p.matcher(cleanStr(str)).find();
     }
 
     /**
      * 清理不需要翻译的字符、数字
+     *
      * @param str
      * @return
      */
-    public static String cleanStr(String str){
+    public static String cleanStr(String str) {
         return str.replaceAll("[0-9\\n\\p{Punct}]", "");
     }
 
     public static void main(String[] args) {
-        String str = "/**\n" +
-                "   * @author: huangwenjun16\n" +
-                " * @date: 2024/6/24 09:25\n" +
-                " * @description:\n" +
-                "*/";
-        System.out.println(validateStr(str, LanguageTypeEnum.EN));
+        String str = "huangwenjun16中文";
         System.out.println(str);
+        System.out.println("结果：" + validateStr(str,LanguageTypeEnum.ZH));
+        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+        Matcher m = p.matcher(str);
+        System.out.println("结果2：" + m.find());
     }
 }

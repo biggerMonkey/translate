@@ -100,7 +100,7 @@ public abstract class AbsFileTranslateUtils implements FileTranslateUtils {
     public abstract void translateFile(TranslateFileDto translateFileDto, BufferedWriter tempBw, BufferedReader oldBr) throws Exception;
 
     public String translateWord(String inputStr) {
-        if (StringLanguageUtils.validateStr(inputStr, toLang)) {
+        if (!StringLanguageUtils.validateStr(inputStr, fromLang)) {
             return "";
         }
         TranslateUtilsManager translateUtilsManager = TranslateUtilsManager.getInstance();
