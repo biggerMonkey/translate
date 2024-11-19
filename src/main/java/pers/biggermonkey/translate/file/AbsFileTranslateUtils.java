@@ -101,7 +101,7 @@ public abstract class AbsFileTranslateUtils implements FileTranslateUtils {
 
     public String translateWord(String inputStr) {
         if (!StringLanguageUtils.validateStr(inputStr, fromLang)) {
-            return "";
+            return inputStr;
         }
         TranslateUtilsManager translateUtilsManager = TranslateUtilsManager.getInstance();
         TranslateRequest request = new TranslateRequest();

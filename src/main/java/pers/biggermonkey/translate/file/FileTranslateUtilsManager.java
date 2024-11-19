@@ -1,10 +1,9 @@
 package pers.biggermonkey.translate.file;
 
 import pers.biggermonkey.translate.common.FileUtil;
-import pers.biggermonkey.translate.enums.LanguageTypeEnum;
 import pers.biggermonkey.translate.enums.FileTypeEnum;
+import pers.biggermonkey.translate.enums.LanguageTypeEnum;
 import pers.biggermonkey.translate.file.java.JavaFileTranslateUtils;
-import pers.biggermonkey.translate.file.xml.XmlFileTranslateUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,8 +19,8 @@ public class FileTranslateUtilsManager {
     public FileTranslateUtilsManager() {
         //初始化
         this.fileTranslateUtils = new HashMap<>();
-        this.fileTranslateUtils.put(FileTypeEnum.JAVA, new JavaFileTranslateUtils());
-        this.fileTranslateUtils.put(FileTypeEnum.XML, new XmlFileTranslateUtils());
+        this.fileTranslateUtils.put(FileTypeEnum.JAVA, new DefaultFileTranslateUtils());
+        this.fileTranslateUtils.put(FileTypeEnum.XML, new DefaultFileTranslateUtils());
     }
 
     public void translateFile(TranslateFileDto translateFileDto) {
@@ -30,9 +29,6 @@ public class FileTranslateUtilsManager {
         }
         FileTypeEnum fileTypeEnum = FileUtil.getFileType(translateFileDto.getOldFile().getName());
         if (fileTypeEnum == null) {
-            return;
-        }
-        if(FileTypeEnum.XML.equals(fileTypeEnum)){
             return;
         }
         FileTranslateUtils fileTranslateUtil = fileTranslateUtils.get(fileTypeEnum);
